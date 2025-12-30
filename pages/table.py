@@ -48,12 +48,13 @@ layout = html.Div([
         style_table={'height': '500px', 'overflowY': 'auto'},
         style_cell={'padding': '10px', 'textAlign': 'center'},
         style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'},
-        row_selectable='multi',  # Allow multiple row selection
-        selected_rows=[],  # Initially no rows are selected
-        page_action='native',  # Enable pagination
-        page_size=25,  # Show 10 rows per page
-        export_format="csv",  # Allow CSV export
+        row_selectable='multi', 
+        selected_rows=[],  
+        page_action='native',  
+        page_size=25, 
+        export_format="csv", 
     ),
+    dcc.Interval(id='table-refresh', interval=180*1000, n_intervals=0),
 ])
 
 
