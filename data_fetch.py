@@ -5,7 +5,7 @@ import pandas as pd
 import requests
 
 API_URL = "https://gaspump-18b4eae89030.herokuapp.com/api/stations"
-CACHE_TTL_SECONDS = 60
+CACHE_TTL_SECONDS = 300
 REQUEST_TIMEOUT_SECONDS = 5
 
 _CACHE = {"df": None, "fetched_at": 0.0, "error": None}
@@ -24,7 +24,10 @@ def get_stations_df() -> Tuple[pd.DataFrame, str]:
     try:
         response = requests.get(API_URL, timeout=REQUEST_TIMEOUT_SECONDS)
         response.raise_for_status()
-        data = response.json()
+        try:
+          data = response.json()
+        except ValueError as exc:
+             raise requests.RequestException(f"Invalid JSON response: {exc}") from exc
         df = pd.DataFrame(data)
         _CACHE.update({"df": df, "fetched_at": now, "error": None})
         return df.copy(), None

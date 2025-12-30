@@ -43,7 +43,7 @@ layout = html.Div([
     # Auto-refresh Interval
     dcc.Interval(
         id='interval-component',
-        interval=10*1000, 
+        interval=180*1000, 
         n_intervals=0
     )
 ])
